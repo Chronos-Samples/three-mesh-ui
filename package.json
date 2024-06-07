@@ -1,5 +1,5 @@
 {
-  "name": "three-mesh-ui",
+  "name": "@chronosai/three-mesh-ui",
   "version": "6.5.4",
   "description": "a library on top of three.js to help in creating 3D user interfaces",
   "engines": {
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/felixmariotto/Three-Mesh-UI.git"
+    "url": "git+https://github.com/Chronos-Samples/three-mesh-ui.git"
   },
   "keywords": [
     "three.js",
@@ -29,7 +29,7 @@
     "virtual reality",
     "webXR"
   ],
-  "author": "felix mariotto",
+  "author": "Felix Mariotto",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/felixmariotto/Three-Mesh-UI/issues"
