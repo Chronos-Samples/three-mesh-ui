@@ -53,66 +53,66 @@ var __webpack_exports__ = {};
 var ContentDirection_namespaceObject = {};
 __webpack_require__.r(ContentDirection_namespaceObject);
 __webpack_require__.d(ContentDirection_namespaceObject, {
-  "COLUMN": () => (COLUMN),
-  "COLUMN_REVERSE": () => (COLUMN_REVERSE),
-  "ROW": () => (ROW),
-  "ROW_REVERSE": () => (ROW_REVERSE),
-  "contentDirection": () => (contentDirection)
+  COLUMN: () => (COLUMN),
+  COLUMN_REVERSE: () => (COLUMN_REVERSE),
+  ROW: () => (ROW),
+  ROW_REVERSE: () => (ROW_REVERSE),
+  contentDirection: () => (contentDirection)
 });
 
 // NAMESPACE OBJECT: ./src/utils/block-layout/AlignItems.js
 var AlignItems_namespaceObject = {};
 __webpack_require__.r(AlignItems_namespaceObject);
 __webpack_require__.d(AlignItems_namespaceObject, {
-  "CENTER": () => (CENTER),
-  "END": () => (END),
-  "START": () => (START),
-  "STRETCH": () => (STRETCH),
-  "alignItems": () => (alignItems),
-  "warnAboutDeprecatedAlignItems": () => (warnAboutDeprecatedAlignItems)
+  CENTER: () => (CENTER),
+  END: () => (END),
+  START: () => (START),
+  STRETCH: () => (STRETCH),
+  alignItems: () => (alignItems),
+  warnAboutDeprecatedAlignItems: () => (warnAboutDeprecatedAlignItems)
 });
 
 // NAMESPACE OBJECT: ./src/utils/block-layout/JustifyContent.js
 var JustifyContent_namespaceObject = {};
 __webpack_require__.r(JustifyContent_namespaceObject);
 __webpack_require__.d(JustifyContent_namespaceObject, {
-  "CENTER": () => (JustifyContent_CENTER),
-  "END": () => (JustifyContent_END),
-  "SPACE_AROUND": () => (SPACE_AROUND),
-  "SPACE_BETWEEN": () => (SPACE_BETWEEN),
-  "SPACE_EVENLY": () => (SPACE_EVENLY),
-  "START": () => (JustifyContent_START),
-  "justifyContent": () => (justifyContent)
+  CENTER: () => (JustifyContent_CENTER),
+  END: () => (JustifyContent_END),
+  SPACE_AROUND: () => (SPACE_AROUND),
+  SPACE_BETWEEN: () => (SPACE_BETWEEN),
+  SPACE_EVENLY: () => (SPACE_EVENLY),
+  START: () => (JustifyContent_START),
+  justifyContent: () => (justifyContent)
 });
 
 // NAMESPACE OBJECT: ./src/utils/inline-layout/Whitespace.js
 var Whitespace_namespaceObject = {};
 __webpack_require__.r(Whitespace_namespaceObject);
 __webpack_require__.d(Whitespace_namespaceObject, {
-  "NORMAL": () => (NORMAL),
-  "NOWRAP": () => (NOWRAP),
-  "PRE": () => (PRE),
-  "PRE_LINE": () => (PRE_LINE),
-  "PRE_WRAP": () => (PRE_WRAP),
-  "WHITE_CHARS": () => (WHITE_CHARS),
-  "collapseWhitespaceOnInlines": () => (collapseWhitespaceOnInlines),
-  "collapseWhitespaceOnString": () => (collapseWhitespaceOnString),
-  "newlineBreakability": () => (newlineBreakability),
-  "shouldBreak": () => (Whitespace_shouldBreak)
+  NORMAL: () => (NORMAL),
+  NOWRAP: () => (NOWRAP),
+  PRE: () => (PRE),
+  PRE_LINE: () => (PRE_LINE),
+  PRE_WRAP: () => (PRE_WRAP),
+  WHITE_CHARS: () => (WHITE_CHARS),
+  collapseWhitespaceOnInlines: () => (collapseWhitespaceOnInlines),
+  collapseWhitespaceOnString: () => (collapseWhitespaceOnString),
+  newlineBreakability: () => (newlineBreakability),
+  shouldBreak: () => (Whitespace_shouldBreak)
 });
 
 // NAMESPACE OBJECT: ./src/utils/inline-layout/TextAlign.js
 var TextAlign_namespaceObject = {};
 __webpack_require__.r(TextAlign_namespaceObject);
 __webpack_require__.d(TextAlign_namespaceObject, {
-  "CENTER": () => (TextAlign_CENTER),
-  "JUSTIFY": () => (JUSTIFY),
-  "JUSTIFY_CENTER": () => (JUSTIFY_CENTER),
-  "JUSTIFY_LEFT": () => (JUSTIFY_LEFT),
-  "JUSTIFY_RIGHT": () => (JUSTIFY_RIGHT),
-  "LEFT": () => (LEFT),
-  "RIGHT": () => (RIGHT),
-  "textAlign": () => (textAlign)
+  CENTER: () => (TextAlign_CENTER),
+  JUSTIFY: () => (JUSTIFY),
+  JUSTIFY_CENTER: () => (JUSTIFY_CENTER),
+  JUSTIFY_LEFT: () => (JUSTIFY_LEFT),
+  JUSTIFY_RIGHT: () => (JUSTIFY_RIGHT),
+  LEFT: () => (LEFT),
+  RIGHT: () => (RIGHT),
+  textAlign: () => (textAlign)
 });
 
 ;// CONCATENATED MODULE: external "THREE"
@@ -3369,12 +3369,6 @@ function InlineComponent( Base ) {
 ;// CONCATENATED MODULE: ./node_modules/three/examples/jsm/utils/BufferGeometryUtils.js
 
 
-function computeTangents() {
-
-	throw new Error( 'BufferGeometryUtils: computeTangents renamed to computeMikkTSpaceTangents.' );
-
-}
-
 function computeMikkTSpaceTangents( geometry, MikkTSpace, negateSign = true ) {
 
 	if ( ! MikkTSpace || ! MikkTSpace.isReady ) {
@@ -3393,9 +3387,9 @@ function computeMikkTSpaceTangents( geometry, MikkTSpace, negateSign = true ) {
 
 		if ( attribute.normalized || attribute.isInterleavedBufferAttribute ) {
 
-			const dstArray = new Float32Array( attribute.getCount() * attribute.itemSize );
+			const dstArray = new Float32Array( attribute.count * attribute.itemSize );
 
-			for ( let i = 0, j = 0; i < attribute.getCount(); i ++ ) {
+			for ( let i = 0, j = 0; i < attribute.count; i ++ ) {
 
 				dstArray[ j ++ ] = attribute.getX( i );
 				dstArray[ j ++ ] = attribute.getY( i );
@@ -3468,7 +3462,7 @@ function computeMikkTSpaceTangents( geometry, MikkTSpace, negateSign = true ) {
  * @param  {Boolean} useGroups
  * @return {BufferGeometry}
  */
-function mergeBufferGeometries( geometries, useGroups = false ) {
+function mergeGeometries( geometries, useGroups = false ) {
 
 	const isIndexed = geometries[ 0 ].index !== null;
 
@@ -3493,7 +3487,7 @@ function mergeBufferGeometries( geometries, useGroups = false ) {
 
 		if ( isIndexed !== ( geometry.index !== null ) ) {
 
-			console.error( 'THREE.BufferGeometryUtils: .mergeBufferGeometries() failed with geometry at index ' + i + '. All geometries must have compatible attributes; make sure index attribute exists among all geometries, or in none of them.' );
+			console.error( 'THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index ' + i + '. All geometries must have compatible attributes; make sure index attribute exists among all geometries, or in none of them.' );
 			return null;
 
 		}
@@ -3504,7 +3498,7 @@ function mergeBufferGeometries( geometries, useGroups = false ) {
 
 			if ( ! attributesUsed.has( name ) ) {
 
-				console.error( 'THREE.BufferGeometryUtils: .mergeBufferGeometries() failed with geometry at index ' + i + '. All geometries must have compatible attributes; make sure "' + name + '" attribute exists among all geometries, or in none of them.' );
+				console.error( 'THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index ' + i + '. All geometries must have compatible attributes; make sure "' + name + '" attribute exists among all geometries, or in none of them.' );
 				return null;
 
 			}
@@ -3521,7 +3515,7 @@ function mergeBufferGeometries( geometries, useGroups = false ) {
 
 		if ( attributesCount !== attributesUsed.size ) {
 
-			console.error( 'THREE.BufferGeometryUtils: .mergeBufferGeometries() failed with geometry at index ' + i + '. Make sure all geometries have the same number of attributes.' );
+			console.error( 'THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index ' + i + '. Make sure all geometries have the same number of attributes.' );
 			return null;
 
 		}
@@ -3530,7 +3524,7 @@ function mergeBufferGeometries( geometries, useGroups = false ) {
 
 		if ( morphTargetsRelative !== geometry.morphTargetsRelative ) {
 
-			console.error( 'THREE.BufferGeometryUtils: .mergeBufferGeometries() failed with geometry at index ' + i + '. .morphTargetsRelative must be consistent throughout all geometries.' );
+			console.error( 'THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index ' + i + '. .morphTargetsRelative must be consistent throughout all geometries.' );
 			return null;
 
 		}
@@ -3539,7 +3533,7 @@ function mergeBufferGeometries( geometries, useGroups = false ) {
 
 			if ( ! morphAttributesUsed.has( name ) ) {
 
-				console.error( 'THREE.BufferGeometryUtils: .mergeBufferGeometries() failed with geometry at index ' + i + '.  .morphAttributes must be consistent throughout all geometries.' );
+				console.error( 'THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index ' + i + '.  .morphAttributes must be consistent throughout all geometries.' );
 				return null;
 
 			}
@@ -3549,11 +3543,6 @@ function mergeBufferGeometries( geometries, useGroups = false ) {
 			morphAttributes[ name ].push( geometry.morphAttributes[ name ] );
 
 		}
-
-		// gather .userData
-
-		mergedGeometry.userData.mergedUserData = mergedGeometry.userData.mergedUserData || [];
-		mergedGeometry.userData.mergedUserData.push( geometry.userData );
 
 		if ( useGroups ) {
 
@@ -3569,7 +3558,7 @@ function mergeBufferGeometries( geometries, useGroups = false ) {
 
 			} else {
 
-				console.error( 'THREE.BufferGeometryUtils: .mergeBufferGeometries() failed with geometry at index ' + i + '. The geometry must have either an index or a position attribute' );
+				console.error( 'THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index ' + i + '. The geometry must have either an index or a position attribute' );
 				return null;
 
 			}
@@ -3611,11 +3600,11 @@ function mergeBufferGeometries( geometries, useGroups = false ) {
 
 	for ( const name in attributes ) {
 
-		const mergedAttribute = mergeBufferAttributes( attributes[ name ] );
+		const mergedAttribute = mergeAttributes( attributes[ name ] );
 
 		if ( ! mergedAttribute ) {
 
-			console.error( 'THREE.BufferGeometryUtils: .mergeBufferGeometries() failed while trying to merge the ' + name + ' attribute.' );
+			console.error( 'THREE.BufferGeometryUtils: .mergeGeometries() failed while trying to merge the ' + name + ' attribute.' );
 			return null;
 
 		}
@@ -3645,11 +3634,11 @@ function mergeBufferGeometries( geometries, useGroups = false ) {
 
 			}
 
-			const mergedMorphAttribute = mergeBufferAttributes( morphAttributesToMerge );
+			const mergedMorphAttribute = mergeAttributes( morphAttributesToMerge );
 
 			if ( ! mergedMorphAttribute ) {
 
-				console.error( 'THREE.BufferGeometryUtils: .mergeBufferGeometries() failed while trying to merge the ' + name + ' morphAttribute.' );
+				console.error( 'THREE.BufferGeometryUtils: .mergeGeometries() failed while trying to merge the ' + name + ' morphAttribute.' );
 				return null;
 
 			}
@@ -3668,28 +3657,22 @@ function mergeBufferGeometries( geometries, useGroups = false ) {
  * @param {Array<BufferAttribute>} attributes
  * @return {BufferAttribute}
  */
-function mergeBufferAttributes( attributes ) {
+function mergeAttributes( attributes ) {
 
 	let TypedArray;
 	let itemSize;
 	let normalized;
+	let gpuType = - 1;
 	let arrayLength = 0;
 
 	for ( let i = 0; i < attributes.length; ++ i ) {
 
 		const attribute = attributes[ i ];
 
-		if ( attribute.isInterleavedBufferAttribute ) {
-
-			console.error( 'THREE.BufferGeometryUtils: .mergeBufferAttributes() failed. InterleavedBufferAttributes are not supported.' );
-			return null;
-
-		}
-
 		if ( TypedArray === undefined ) TypedArray = attribute.array.constructor;
 		if ( TypedArray !== attribute.array.constructor ) {
 
-			console.error( 'THREE.BufferGeometryUtils: .mergeBufferAttributes() failed. BufferAttribute.array must be of consistent array types across matching attributes.' );
+			console.error( 'THREE.BufferGeometryUtils: .mergeAttributes() failed. BufferAttribute.array must be of consistent array types across matching attributes.' );
 			return null;
 
 		}
@@ -3697,7 +3680,7 @@ function mergeBufferAttributes( attributes ) {
 		if ( itemSize === undefined ) itemSize = attribute.itemSize;
 		if ( itemSize !== attribute.itemSize ) {
 
-			console.error( 'THREE.BufferGeometryUtils: .mergeBufferAttributes() failed. BufferAttribute.itemSize must be consistent across matching attributes.' );
+			console.error( 'THREE.BufferGeometryUtils: .mergeAttributes() failed. BufferAttribute.itemSize must be consistent across matching attributes.' );
 			return null;
 
 		}
@@ -3705,27 +3688,83 @@ function mergeBufferAttributes( attributes ) {
 		if ( normalized === undefined ) normalized = attribute.normalized;
 		if ( normalized !== attribute.normalized ) {
 
-			console.error( 'THREE.BufferGeometryUtils: .mergeBufferAttributes() failed. BufferAttribute.normalized must be consistent across matching attributes.' );
+			console.error( 'THREE.BufferGeometryUtils: .mergeAttributes() failed. BufferAttribute.normalized must be consistent across matching attributes.' );
 			return null;
 
 		}
 
-		arrayLength += attribute.array.length;
+		if ( gpuType === - 1 ) gpuType = attribute.gpuType;
+		if ( gpuType !== attribute.gpuType ) {
+
+			console.error( 'THREE.BufferGeometryUtils: .mergeAttributes() failed. BufferAttribute.gpuType must be consistent across matching attributes.' );
+			return null;
+
+		}
+
+		arrayLength += attribute.count * itemSize;
 
 	}
 
 	const array = new TypedArray( arrayLength );
+	const result = new external_THREE_namespaceObject.BufferAttribute( array, itemSize, normalized );
 	let offset = 0;
 
 	for ( let i = 0; i < attributes.length; ++ i ) {
 
-		array.set( attributes[ i ].array, offset );
+		const attribute = attributes[ i ];
+		if ( attribute.isInterleavedBufferAttribute ) {
 
-		offset += attributes[ i ].array.length;
+			const tupleOffset = offset / itemSize;
+			for ( let j = 0, l = attribute.count; j < l; j ++ ) {
+
+				for ( let c = 0; c < itemSize; c ++ ) {
+
+					const value = attribute.getComponent( j, c );
+					result.setComponent( j + tupleOffset, c, value );
+
+				}
+
+			}
+
+		} else {
+
+			array.set( attribute.array, offset );
+
+		}
+
+		offset += attribute.count * itemSize;
 
 	}
 
-	return new external_THREE_namespaceObject.BufferAttribute( array, itemSize, normalized );
+	if ( gpuType !== undefined ) {
+
+		result.gpuType = gpuType;
+
+	}
+
+	return result;
+
+}
+
+/**
+ * @param {BufferAttribute}
+ * @return {BufferAttribute}
+ */
+function deepCloneAttribute( attribute ) {
+
+	if ( attribute.isInstancedInterleavedBufferAttribute || attribute.isInterleavedBufferAttribute ) {
+
+		return deinterleaveAttribute( attribute );
+
+	}
+
+	if ( attribute.isInstancedBufferAttribute ) {
+
+		return new InstancedBufferAttribute().copy( attribute );
+
+	}
+
+	return new BufferAttribute().copy( attribute );
 
 }
 
@@ -3886,7 +3925,7 @@ function deinterleaveGeometry( geometry ) {
 }
 
 /**
- * @param {Array<BufferGeometry>} geometry
+ * @param {BufferGeometry} geometry
  * @return {number}
  */
 function estimateBytesUsed( geometry ) {
@@ -3942,28 +3981,32 @@ function mergeVertices( geometry, tolerance = 1e-4 ) {
 		const name = attributeNames[ i ];
 		const attr = geometry.attributes[ name ];
 
-		tmpAttributes[ name ] = new BufferAttribute(
+		tmpAttributes[ name ] = new attr.constructor(
 			new attr.array.constructor( attr.count * attr.itemSize ),
 			attr.itemSize,
 			attr.normalized
 		);
 
-		const morphAttr = geometry.morphAttributes[ name ];
-		if ( morphAttr ) {
+		const morphAttributes = geometry.morphAttributes[ name ];
+		if ( morphAttributes ) {
 
-			tmpMorphAttributes[ name ] = new BufferAttribute(
-				new morphAttr.array.constructor( morphAttr.count * morphAttr.itemSize ),
-				morphAttr.itemSize,
-				morphAttr.normalized
-			);
+			if ( ! tmpMorphAttributes[ name ] ) tmpMorphAttributes[ name ] = [];
+			morphAttributes.forEach( ( morphAttr, i ) => {
+
+				const array = new morphAttr.array.constructor( morphAttr.count * morphAttr.itemSize );
+				tmpMorphAttributes[ name ][ i ] = new morphAttr.constructor( array, morphAttr.itemSize, morphAttr.normalized );
+
+			} );
 
 		}
 
 	}
 
 	// convert the error tolerance to an amount of decimal places to truncate to
-	const decimalShift = Math.log10( 1 / tolerance );
-	const shiftMultiplier = Math.pow( 10, decimalShift );
+	const halfTolerance = tolerance * 0.5;
+	const exponent = Math.log10( 1 / tolerance );
+	const hashMultiplier = Math.pow( 10, exponent );
+	const hashAdditive = halfTolerance * hashMultiplier;
 	for ( let i = 0; i < vertexCount; i ++ ) {
 
 		const index = indices ? indices.getX( i ) : i;
@@ -3979,7 +4022,7 @@ function mergeVertices( geometry, tolerance = 1e-4 ) {
 			for ( let k = 0; k < itemSize; k ++ ) {
 
 				// double tilde truncates the decimal value
-				hash += `${ ~ ~ ( attribute[ getters[ k ] ]( index ) * shiftMultiplier ) },`;
+				hash += `${ ~ ~ ( attribute[ getters[ k ] ]( index ) * hashMultiplier + hashAdditive ) },`;
 
 			}
 
@@ -3998,22 +4041,22 @@ function mergeVertices( geometry, tolerance = 1e-4 ) {
 
 				const name = attributeNames[ j ];
 				const attribute = geometry.getAttribute( name );
-				const morphAttr = geometry.morphAttributes[ name ];
+				const morphAttributes = geometry.morphAttributes[ name ];
 				const itemSize = attribute.itemSize;
-				const newarray = tmpAttributes[ name ];
+				const newArray = tmpAttributes[ name ];
 				const newMorphArrays = tmpMorphAttributes[ name ];
 
 				for ( let k = 0; k < itemSize; k ++ ) {
 
 					const getterFunc = getters[ k ];
 					const setterFunc = setters[ k ];
-					newarray[ setterFunc ]( nextIndex, attribute[ getterFunc ]( index ) );
+					newArray[ setterFunc ]( nextIndex, attribute[ getterFunc ]( index ) );
 
-					if ( morphAttr ) {
+					if ( morphAttributes ) {
 
-						for ( let m = 0, ml = morphAttr.length; m < ml; m ++ ) {
+						for ( let m = 0, ml = morphAttributes.length; m < ml; m ++ ) {
 
-							newMorphArrays[ m ][ setterFunc ]( nextIndex, morphAttr[ m ][ getterFunc ]( index ) );
+							newMorphArrays[ m ][ setterFunc ]( nextIndex, morphAttributes[ m ][ getterFunc ]( index ) );
 
 						}
 
@@ -4037,7 +4080,7 @@ function mergeVertices( geometry, tolerance = 1e-4 ) {
 
 		const tmpAttribute = tmpAttributes[ name ];
 
-		result.setAttribute( name, new BufferAttribute(
+		result.setAttribute( name, new tmpAttribute.constructor(
 			tmpAttribute.array.slice( 0, nextIndex * tmpAttribute.itemSize ),
 			tmpAttribute.itemSize,
 			tmpAttribute.normalized,
@@ -4049,7 +4092,7 @@ function mergeVertices( geometry, tolerance = 1e-4 ) {
 
 			const tmpMorphAttribute = tmpMorphAttributes[ name ][ j ];
 
-			result.morphAttributes[ name ][ j ] = new BufferAttribute(
+			result.morphAttributes[ name ][ j ] = new tmpMorphAttribute.constructor(
 				tmpMorphAttribute.array.slice( 0, nextIndex * tmpMorphAttribute.itemSize ),
 				tmpMorphAttribute.itemSize,
 				tmpMorphAttribute.normalized,
@@ -4185,13 +4228,6 @@ function toTrianglesDrawMode( geometry, drawMode ) {
  */
 function computeMorphedAttributes( object ) {
 
-	if ( object.geometry.isBufferGeometry !== true ) {
-
-		console.error( 'THREE.BufferGeometryUtils: Geometry is not of type BufferGeometry.' );
-		return null;
-
-	}
-
 	const _vA = new Vector3();
 	const _vB = new Vector3();
 	const _vC = new Vector3();
@@ -4262,9 +4298,9 @@ function computeMorphedAttributes( object ) {
 
 		if ( object.isSkinnedMesh ) {
 
-			object.boneTransform( a, _vA );
-			object.boneTransform( b, _vB );
-			object.boneTransform( c, _vC );
+			object.applyBoneTransform( a, _vA );
+			object.applyBoneTransform( b, _vB );
+			object.applyBoneTransform( c, _vC );
 
 		}
 
@@ -4567,6 +4603,121 @@ function mergeGroups( geometry ) {
 }
 
 
+/**
+ * Modifies the supplied geometry if it is non-indexed, otherwise creates a new,
+ * non-indexed geometry. Returns the geometry with smooth normals everywhere except
+ * faces that meet at an angle greater than the crease angle.
+ *
+ * @param {BufferGeometry} geometry
+ * @param {number} [creaseAngle]
+ * @return {BufferGeometry}
+ */
+function toCreasedNormals( geometry, creaseAngle = Math.PI / 3 /* 60 degrees */ ) {
+
+	const creaseDot = Math.cos( creaseAngle );
+	const hashMultiplier = ( 1 + 1e-10 ) * 1e2;
+
+	// reusable vectors
+	const verts = [ new Vector3(), new Vector3(), new Vector3() ];
+	const tempVec1 = new Vector3();
+	const tempVec2 = new Vector3();
+	const tempNorm = new Vector3();
+	const tempNorm2 = new Vector3();
+
+	// hashes a vector
+	function hashVertex( v ) {
+
+		const x = ~ ~ ( v.x * hashMultiplier );
+		const y = ~ ~ ( v.y * hashMultiplier );
+		const z = ~ ~ ( v.z * hashMultiplier );
+		return `${x},${y},${z}`;
+
+	}
+
+	// BufferGeometry.toNonIndexed() warns if the geometry is non-indexed
+	// and returns the original geometry
+	const resultGeometry = geometry.index ? geometry.toNonIndexed() : geometry;
+	const posAttr = resultGeometry.attributes.position;
+	const vertexMap = {};
+
+	// find all the normals shared by commonly located vertices
+	for ( let i = 0, l = posAttr.count / 3; i < l; i ++ ) {
+
+		const i3 = 3 * i;
+		const a = verts[ 0 ].fromBufferAttribute( posAttr, i3 + 0 );
+		const b = verts[ 1 ].fromBufferAttribute( posAttr, i3 + 1 );
+		const c = verts[ 2 ].fromBufferAttribute( posAttr, i3 + 2 );
+
+		tempVec1.subVectors( c, b );
+		tempVec2.subVectors( a, b );
+
+		// add the normal to the map for all vertices
+		const normal = new Vector3().crossVectors( tempVec1, tempVec2 ).normalize();
+		for ( let n = 0; n < 3; n ++ ) {
+
+			const vert = verts[ n ];
+			const hash = hashVertex( vert );
+			if ( ! ( hash in vertexMap ) ) {
+
+				vertexMap[ hash ] = [];
+
+			}
+
+			vertexMap[ hash ].push( normal );
+
+		}
+
+	}
+
+	// average normals from all vertices that share a common location if they are within the
+	// provided crease threshold
+	const normalArray = new Float32Array( posAttr.count * 3 );
+	const normAttr = new BufferAttribute( normalArray, 3, false );
+	for ( let i = 0, l = posAttr.count / 3; i < l; i ++ ) {
+
+		// get the face normal for this vertex
+		const i3 = 3 * i;
+		const a = verts[ 0 ].fromBufferAttribute( posAttr, i3 + 0 );
+		const b = verts[ 1 ].fromBufferAttribute( posAttr, i3 + 1 );
+		const c = verts[ 2 ].fromBufferAttribute( posAttr, i3 + 2 );
+
+		tempVec1.subVectors( c, b );
+		tempVec2.subVectors( a, b );
+
+		tempNorm.crossVectors( tempVec1, tempVec2 ).normalize();
+
+		// average all normals that meet the threshold and set the normal value
+		for ( let n = 0; n < 3; n ++ ) {
+
+			const vert = verts[ n ];
+			const hash = hashVertex( vert );
+			const otherNormals = vertexMap[ hash ];
+			tempNorm2.set( 0, 0, 0 );
+
+			for ( let k = 0, lk = otherNormals.length; k < lk; k ++ ) {
+
+				const otherNorm = otherNormals[ k ];
+				if ( tempNorm.dot( otherNorm ) > creaseDot ) {
+
+					tempNorm2.add( otherNorm );
+
+				}
+
+			}
+
+			tempNorm2.normalize();
+			normAttr.setXYZ( i3 + n, tempNorm2.x, tempNorm2.y, tempNorm2.z );
+
+		}
+
+	}
+
+	resultGeometry.setAttribute( 'normal', normAttr );
+	return resultGeometry;
+
+}
+
+
 
 ;// CONCATENATED MODULE: ./src/content/MSDFGlyph.js
 
@@ -4790,7 +4941,7 @@ function buildText() {
 
 	} );
 
-	const mergedGeom = mergeBufferGeometries( translatedGeom );
+	const mergedGeom = mergeGeometries( translatedGeom );
 
 	const mesh = new external_THREE_namespaceObject.Mesh( mergedGeom, this.getFontMaterial() );
 

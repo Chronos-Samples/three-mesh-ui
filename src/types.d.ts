@@ -89,21 +89,20 @@ export declare class Block extends Object3D {
 
 	public onAfterUpdate: Function | undefined;
 }
-
 //#endregion
 
 //#region TEXT
 export type TextOptions = {
-	content: string;
-	fontKerning: FontKerningAttr;
-	letterSpacing: number;
-	textAlign: TextAlignAttr;
-	whiteSpace: WhiteSpaceAttr;
-	breakOn: string;
+	content?: string;
+	fontKerning?: FontKerningAttr;
+	letterSpacing?: number;
+	textAlign?: TextAlignAttr;
+	whiteSpace?: WhiteSpaceAttr;
+	breakOn?: string;
 
-	fontColor: Color;
-	fontOpacity: number;
-	fontSuperSampling: boolean;
+	fontColor?: Color;
+	fontOpacity?: number;
+	fontSuperSampling?: boolean;
 }
 
 export type TextState = {
@@ -113,16 +112,16 @@ export type TextState = {
 }
 
 export declare class Text extends Object3D {
-	content: string;
-	fontKerning: FontKerningAttr;
-	letterSpacing: number;
-	textAlign: TextAlignAttr;
-	whiteSpace: WhiteSpaceAttr;
-	breakOn: string;
+	content?: string;
+	fontKerning?: FontKerningAttr;
+	letterSpacing?: number;
+	textAlign?: TextAlignAttr;
+	whiteSpace?: WhiteSpaceAttr;
+	breakOn?: string;
 
-	fontColor: Color;
-	fontOpacity: number;
-	fontSuperSampling: boolean;
+	fontColor?: Color;
+	fontOpacity?: number;
+	fontSuperSampling?: boolean;
 
 	constructor(options: CommonOptions & TextOptions);
 

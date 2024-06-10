@@ -1,6 +1,6 @@
 {
   "name": "@chronosai/three-mesh-ui",
-  "version": "6.5.4",
+  "version": "6.5.8",
   "description": "a library on top of three.js to help in creating 3D user interfaces",
   "engines": {
     "node": "x.x.x"
@@ -50,7 +50,7 @@
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.7.4"
   },
-  "peerDependencies": {
-    "three": ">=0.144.0"
+  "dependencies": {
+    "three": "^0.165.0"
   }
 }
