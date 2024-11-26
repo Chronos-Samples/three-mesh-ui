@@ -2598,7 +2598,10 @@ function MeshUIComponent( Base ) {
 						case 'hiddenOverflow' :
 							this[ prop ] = options[ prop ];
 							break;
-
+						case 'billboard' :
+						case 'sizeAttenuation' :
+							this[ prop ] = options[ prop ];
+							break;
 					}
 
 				}
@@ -2825,7 +2828,6 @@ function MaterialManager( Base ) {
 		getBackgroundMaterial() {
 
 			if ( !this.backgroundMaterial || !this.backgroundUniforms ) {
-
 				this.backgroundMaterial = this._makeBackgroundMaterial();
 
 			}
@@ -2849,6 +2851,13 @@ function MaterialManager( Base ) {
 
 		/** @private */
 		_makeTextMaterial() {
+			const extraDefines = {};
+			if(this.billboard) {
+				extraDefines['USE_BILLBOARD'] = true;
+			}
+			if(this.sizeAttenuation) {
+				extraDefines['USE_SIZE_ATTENUATION'] = true;
+			}
 
 			return new external_three_namespaceObject.ShaderMaterial( {
 				uniforms: this.textUniforms,
@@ -2858,13 +2867,21 @@ function MaterialManager( Base ) {
 				fragmentShader: textFragment,
 				extensions: {
 					derivatives: true
-				}
+				},
+				defines: extraDefines
 			} );
 
 		}
 
 		/** @private */
 		_makeBackgroundMaterial() {
+			const extraDefines = {};
+			if(this.billboard) {
+				extraDefines['USE_BILLBOARD'] = true;
+			}
+			if(this.sizeAttenuation) {
+				extraDefines['USE_SIZE_ATTENUATION'] = true;
+			}
 
 			return new external_three_namespaceObject.ShaderMaterial( {
 				uniforms: this.backgroundUniforms,
@@ -2874,7 +2891,8 @@ function MaterialManager( Base ) {
 				fragmentShader: backgroundFragment,
 				extensions: {
 					derivatives: true
-				}
+				},
+				defines: extraDefines
 			} );
 
 		}
@@ -2908,18 +2926,42 @@ function MaterialManager( Base ) {
 ////////////////
 
 const textVertex = `
-varying vec2 vUv;
+#include <common>
 
-#include <clipping_planes_pars_vertex>
+varying vec2 vUv;
+float rotation = 0.0;
+vec2 center = vec2(0.5, 0.5);
 
 void main() {
 
 	vUv = uv;
-	vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
-	gl_Position = projectionMatrix * mvPosition;
-	gl_Position.z -= 0.00001;
+	vec4 mvPosition;
 
-	#include <clipping_planes_vertex>
+	#ifdef USE_BILLBOARD
+		mvPosition = modelViewMatrix * vec4( 0.0, 0.0, 0.0, 1.0 );
+
+		vec2 scale;
+		scale.x = length( vec3( modelMatrix[ 0 ].x, modelMatrix[ 0 ].y, modelMatrix[ 0 ].z ) );
+		scale.y = length( vec3( modelMatrix[ 1 ].x, modelMatrix[ 1 ].y, modelMatrix[ 1 ].z ) );
+
+		#ifndef USE_SIZE_ATTENUATION
+			bool isPerspective = isPerspectiveMatrix( projectionMatrix );
+
+			if ( isPerspective ) scale *= - mvPosition.z;
+		#endif
+
+		vec2 alignedPosition = ( position.xy - ( center - vec2( 0.5 ) ) ) * scale;
+
+		vec2 rotatedPosition;
+		rotatedPosition.x = cos( rotation ) * alignedPosition.x - sin( rotation ) * alignedPosition.y;
+		rotatedPosition.y = sin( rotation ) * alignedPosition.x + cos( rotation ) * alignedPosition.y;
+
+		mvPosition.xy += rotatedPosition;
+
+	#else
+		mvPosition = modelViewMatrix * vec4( position, 1.0 );
+	#endif
+	gl_Position = projectionMatrix * mvPosition;
 
 }
 `;
@@ -3012,18 +3054,45 @@ void main() {
 //////////////////////
 
 const backgroundVertex = `
+#include <common>
+
 varying vec2 vUv;
 
-#include <clipping_planes_pars_vertex>
+float rotation = 0.0;
+vec2 center = vec2(0.5, 0.5);
 
 void main() {
 
 	vUv = uv;
-	vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+	vec4 mvPosition;
+
+	#ifdef USE_BILLBOARD
+		mvPosition = modelViewMatrix * vec4( 0.0, 0.0, 0.0, 1.0 );
+
+		mvPosition.z -= 0.0001;
+
+		vec2 scale;
+		scale.x = length( vec3( modelMatrix[ 0 ].x, modelMatrix[ 0 ].y, modelMatrix[ 0 ].z ) );
+		scale.y = length( vec3( modelMatrix[ 1 ].x, modelMatrix[ 1 ].y, modelMatrix[ 1 ].z ) );
+
+		#ifndef USE_SIZE_ATTENUATION
+			bool isPerspective = isPerspectiveMatrix( projectionMatrix );
+			if ( isPerspective ) scale *= - mvPosition.z;
+		#endif
+
+		vec2 alignedPosition = ( position.xy - ( center - vec2( 0.5 ) ) ) * scale;
+
+		vec2 rotatedPosition;
+		rotatedPosition.x = cos( rotation ) * alignedPosition.x - sin( rotation ) * alignedPosition.y;
+		rotatedPosition.y = sin( rotation ) * alignedPosition.x + cos( rotation ) * alignedPosition.y;
+
+		mvPosition.xy += rotatedPosition;
+	#else
+		mvPosition = modelViewMatrix * vec4( position, 1.0 );
+		mvPosition.z -= 0.0001;
+	#endif
+
 	gl_Position = projectionMatrix * mvPosition;
-
-	#include <clipping_planes_vertex>
-
 }
 `;
 
@@ -3233,6 +3302,8 @@ class Block extends mix.withBase( external_three_namespaceObject.Object3D )(
 
 		this.size = new external_three_namespaceObject.Vector2( 1, 1 );
 
+		this.set( options );
+
 		this.frame = new Frame( this.getBackgroundMaterial() );
 
 		// This is for hiddenOverflow to work
@@ -3249,7 +3320,6 @@ class Block extends mix.withBase( external_three_namespaceObject.Object3D )(
 		this.add( this.frame );
 
 		// Lastly set the options parameters to this object, which will trigger an update
-
 		this.set( options );
 
 	}
@@ -5173,13 +5243,9 @@ class Text extends mix.withBase( external_three_namespaceObject.Object3D )(
 
 		}
 
-		this.position.z = this.getOffset();
-
 	}
 
 	updateInner() {
-
-		this.position.z = this.getOffset();
 
 		if ( this.textContent ) this.updateTextMaterial();
 

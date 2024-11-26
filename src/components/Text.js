@@ -77,13 +77,9 @@ export default class Text extends mix.withBase( Object3D )(
 
 		}
 
-		this.position.z = this.getOffset();
-
 	}
 
 	updateInner() {
-
-		this.position.z = this.getOffset();
 
 		if ( this.textContent ) this.updateTextMaterial();
 

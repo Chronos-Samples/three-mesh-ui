@@ -139,7 +139,6 @@ export default function MaterialManager( Base ) {
 		getBackgroundMaterial() {
 
 			if ( !this.backgroundMaterial || !this.backgroundUniforms ) {
-
 				this.backgroundMaterial = this._makeBackgroundMaterial();
 
 			}
@@ -163,6 +162,13 @@ export default function MaterialManager( Base ) {
 
 		/** @private */
 		_makeTextMaterial() {
+			const extraDefines = {};
+			if(this.billboard) {
+				extraDefines['USE_BILLBOARD'] = true;
+			}
+			if(this.sizeAttenuation) {
+				extraDefines['USE_SIZE_ATTENUATION'] = true;
+			}
 
 			return new ShaderMaterial( {
 				uniforms: this.textUniforms,
@@ -172,13 +178,21 @@ export default function MaterialManager( Base ) {
 				fragmentShader: textFragment,
 				extensions: {
 					derivatives: true
-				}
+				},
+				defines: extraDefines
 			} );
 
 		}
 
 		/** @private */
 		_makeBackgroundMaterial() {
+			const extraDefines = {};
+			if(this.billboard) {
+				extraDefines['USE_BILLBOARD'] = true;
+			}
+			if(this.sizeAttenuation) {
+				extraDefines['USE_SIZE_ATTENUATION'] = true;
+			}
 
 			return new ShaderMaterial( {
 				uniforms: this.backgroundUniforms,
@@ -188,7 +202,8 @@ export default function MaterialManager( Base ) {
 				fragmentShader: backgroundFragment,
 				extensions: {
 					derivatives: true
-				}
+				},
+				defines: extraDefines
 			} );
 
 		}
@@ -222,18 +237,42 @@ export default function MaterialManager( Base ) {
 ////////////////
 
 const textVertex = `
-varying vec2 vUv;
+#include <common>
 
-#include <clipping_planes_pars_vertex>
+varying vec2 vUv;
+float rotation = 0.0;
+vec2 center = vec2(0.5, 0.5);
 
 void main() {
 
 	vUv = uv;
-	vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
-	gl_Position = projectionMatrix * mvPosition;
-	gl_Position.z -= 0.00001;
+	vec4 mvPosition;
 
-	#include <clipping_planes_vertex>
+	#ifdef USE_BILLBOARD
+		mvPosition = modelViewMatrix * vec4( 0.0, 0.0, 0.0, 1.0 );
+
+		vec2 scale;
+		scale.x = length( vec3( modelMatrix[ 0 ].x, modelMatrix[ 0 ].y, modelMatrix[ 0 ].z ) );
+		scale.y = length( vec3( modelMatrix[ 1 ].x, modelMatrix[ 1 ].y, modelMatrix[ 1 ].z ) );
+
+		#ifndef USE_SIZE_ATTENUATION
+			bool isPerspective = isPerspectiveMatrix( projectionMatrix );
+
+			if ( isPerspective ) scale *= - mvPosition.z;
+		#endif
+
+		vec2 alignedPosition = ( position.xy - ( center - vec2( 0.5 ) ) ) * scale;
+
+		vec2 rotatedPosition;
+		rotatedPosition.x = cos( rotation ) * alignedPosition.x - sin( rotation ) * alignedPosition.y;
+		rotatedPosition.y = sin( rotation ) * alignedPosition.x + cos( rotation ) * alignedPosition.y;
+
+		mvPosition.xy += rotatedPosition;
+
+	#else
+		mvPosition = modelViewMatrix * vec4( position, 1.0 );
+	#endif
+	gl_Position = projectionMatrix * mvPosition;
 
 }
 `;
@@ -326,18 +365,45 @@ void main() {
 //////////////////////
 
 const backgroundVertex = `
+#include <common>
+
 varying vec2 vUv;
 
-#include <clipping_planes_pars_vertex>
+float rotation = 0.0;
+vec2 center = vec2(0.5, 0.5);
 
 void main() {
 
 	vUv = uv;
-	vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+	vec4 mvPosition;
+
+	#ifdef USE_BILLBOARD
+		mvPosition = modelViewMatrix * vec4( 0.0, 0.0, 0.0, 1.0 );
+
+		mvPosition.z -= 0.0001;
+
+		vec2 scale;
+		scale.x = length( vec3( modelMatrix[ 0 ].x, modelMatrix[ 0 ].y, modelMatrix[ 0 ].z ) );
+		scale.y = length( vec3( modelMatrix[ 1 ].x, modelMatrix[ 1 ].y, modelMatrix[ 1 ].z ) );
+
+		#ifndef USE_SIZE_ATTENUATION
+			bool isPerspective = isPerspectiveMatrix( projectionMatrix );
+			if ( isPerspective ) scale *= - mvPosition.z;
+		#endif
+
+		vec2 alignedPosition = ( position.xy - ( center - vec2( 0.5 ) ) ) * scale;
+
+		vec2 rotatedPosition;
+		rotatedPosition.x = cos( rotation ) * alignedPosition.x - sin( rotation ) * alignedPosition.y;
+		rotatedPosition.y = sin( rotation ) * alignedPosition.x + cos( rotation ) * alignedPosition.y;
+
+		mvPosition.xy += rotatedPosition;
+	#else
+		mvPosition = modelViewMatrix * vec4( position, 1.0 );
+		mvPosition.z -= 0.0001;
+	#endif
+
 	gl_Position = projectionMatrix * mvPosition;
-
-	#include <clipping_planes_vertex>
-
 }
 `;
 

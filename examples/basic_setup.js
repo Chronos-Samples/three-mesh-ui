@@ -65,18 +65,19 @@ function init() {
 function makeTextPanel() {
 
 	const container = new ThreeMeshUI.Block( {
-		width: 1.3,
-		height: 0.5,
-		padding: 0.05,
+		width: 1.3/3,
+		height: 0.5/3,
+		padding: 0.05/3,
 		justifyContent: 'center',
 		textAlign: 'left',
 		fontFamily: FontJSON,
 		fontTexture: FontImage,
 		// interLine: 0,
+		billboard: true,
 	} );
 
 	container.position.set( 0, 1, -1.8 );
-	container.rotation.x = -0.55;
+	// container.rotation.x = -0.55;
 	scene.add( container );
 
 	//
@@ -85,14 +86,48 @@ function makeTextPanel() {
 		new ThreeMeshUI.Text( {
 			// content: 'This library supports line-break-friendly-characters,',
 			content: 'This library supports line break friendly characters',
-			fontSize: 0.055
+			fontSize: 0.055/3,
+			billboard: true,
 		} ),
 
 		new ThreeMeshUI.Text( {
 			content: ' As well as multi font size lines with consistent vertical spacing',
-			fontSize: 0.08
+			fontSize: 0.08/3,
+			billboard: true,
 		} )
 	);
+
+	console.log(container)
+
+	// const container2 = new ThreeMeshUI.Block( {
+	// 	width: 1.3/2,
+	// 	height: 0.5/2,
+	// 	padding: 0.05/2,
+	// 	justifyContent: 'center',
+	// 	textAlign: 'left',
+	// 	fontFamily: FontJSON,
+	// 	fontTexture: FontImage,
+	// 	// interLine: 0,
+	// } );
+	//
+	// container2.position.set( 1, 1, -1.801 );
+	// // container.rotation.x = -0.55;
+	// scene.add( container2 );
+
+	//
+
+	// container2.add(
+	// 	new ThreeMeshUI.Text( {
+	// 		// content: 'This library supports line-break-friendly-characters,',
+	// 		content: 'This library supports line break friendly characters',
+	// 		fontSize: 0.055/2
+	// 	} ),
+	//
+	// 	new ThreeMeshUI.Text( {
+	// 		content: ' As well as multi font size lines with consistent vertical spacing',
+	// 		fontSize: 0.08/2
+	// 	} )
+	// );
 
 
 	return

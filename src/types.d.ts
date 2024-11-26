@@ -45,6 +45,9 @@ export type BlockOptions = {
 
 	fontFamily?: string;
 	fontTexture?: string;
+
+	billboard?: boolean;
+	sizeAttenuation?: boolean;
 }
 
 export type BlockState = {
@@ -77,6 +80,9 @@ export declare class Block extends Object3D {
 	fontFamily?: string;
 	fontTexture?: string;
 
+	billboard?: boolean;
+	sizeAttenuation?: boolean;
+
 	constructor(options: CommonOptions & BlockOptions);
 
 	public update(updateParsing: boolean, updateLayout: boolean, updateInner: boolean): void;
@@ -103,6 +109,9 @@ export type TextOptions = {
 	fontColor?: Color;
 	fontOpacity?: number;
 	fontSuperSampling?: boolean;
+
+	billboard?: boolean;
+	sizeAttenuation?: boolean;
 }
 
 export type TextState = {
@@ -122,6 +131,9 @@ export declare class Text extends Object3D {
 	fontColor?: Color;
 	fontOpacity?: number;
 	fontSuperSampling?: boolean;
+
+	billboard?: boolean;
+	sizeAttenuation?: boolean;
 
 	constructor(options: CommonOptions & TextOptions);
 

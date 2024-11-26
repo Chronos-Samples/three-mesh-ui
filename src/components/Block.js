@@ -34,6 +34,8 @@ export default class Block extends mix.withBase( Object3D )(
 
 		this.size = new Vector2( 1, 1 );
 
+		this.set( options );
+
 		this.frame = new Frame( this.getBackgroundMaterial() );
 
 		// This is for hiddenOverflow to work
@@ -50,7 +52,6 @@ export default class Block extends mix.withBase( Object3D )(
 		this.add( this.frame );
 
 		// Lastly set the options parameters to this object, which will trigger an update
-
 		this.set( options );
 
 	}

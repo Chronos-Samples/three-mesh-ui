@@ -594,7 +594,10 @@ export default function MeshUIComponent( Base ) {
 						case 'hiddenOverflow' :
 							this[ prop ] = options[ prop ];
 							break;
-
+						case 'billboard' :
+						case 'sizeAttenuation' :
+							this[ prop ] = options[ prop ];
+							break;
 					}
 
 				}
